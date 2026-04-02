@@ -1,13 +1,13 @@
-package com.ed.transaction_processing;
+package com.ed.transaction_processing.common.event;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TransactionProcessingApplication {
+public class TransactionEvent {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TransactionProcessingApplication.class, args);
+		SpringApplication.run(TransactionEvent.class, args);
 	}
 
 }
