@@ -7,7 +7,8 @@ do
     -d "{
       \"transactionId\": \"tx-$i\",
       \"userId\": \"user-$i\",
-      \"amount\": $((RANDOM % 20000))
+      \"qty\": $((RANDOM % 20000)),
+      \"location\": \"London\"  // randomly generate...?
     }"
 done
 
