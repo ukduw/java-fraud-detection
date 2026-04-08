@@ -28,3 +28,9 @@ services:
 # send post requests via curl...
 
 # docker logs kafka
+
+
+# just in case:
+  # sudo -u postgres psql
+  # CREATE DATABASE transactiondb;
+
