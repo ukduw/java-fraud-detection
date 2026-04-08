@@ -26,7 +26,7 @@ public class TransactionEvent {
 		return qty;
 	}
 	public String getLocation() { return location; }
-
+		// note: use in FraudDetectionService logic
 
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
