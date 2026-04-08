@@ -92,9 +92,20 @@ Note:
 
 
 ideas for fraud detection (stateful):
-- user_id, location, timestamp
+- userId, location, timestamp
 - query db on transaction
 - if location changes too fast...
 - velocity check (e.g. 5 transactions in 10 seconds)
 - amount anomaly (usually 1-75, suddenly 10,000)
 - risk score rather than binary?
+  - e.g. flag on 50-69, flag/noti/block on >= 70
+- unusual merchantId?
+
+TODO:
+- add timestamp to event
+- UserTransaction getters/setters
+  - add as necessary?
+  - what scenarios are setters needed in?
+- implement above fraud detection logic
+
+
