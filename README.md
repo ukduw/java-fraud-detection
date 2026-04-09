@@ -91,16 +91,14 @@ Note:
 - docker: `kafka:9092`
 
 
-ideas for fraud detection (stateful):
-- userId, location, timestamp
-- query db on transaction
-- if location changes too fast...
-- amount anomaly (usually 1-75, suddenly 10,000)
-- risk score rather than binary?
-  - e.g. flag on 50-69, flag/noti/block on >= 70
-
 TODO:
-- implement above fraud detection logic
+- implement (stateful) fraud detection logic
+  - userId, location, timestamp
+  - query db on transaction
+  - if location changes too fast...
+  - amount anomaly (usually 1-75, suddenly 10k)
+  - risk score rather than binary
+    - e.g. flag on 50-69, flag/noti/block on >= 70
 - decision outcomes, not just logging
 - `fraud-service` should emit new `Kafka event`
   - `transaction.processed`, `transaction.flagged`
