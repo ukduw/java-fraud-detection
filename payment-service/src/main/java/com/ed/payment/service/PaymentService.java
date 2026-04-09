@@ -4,6 +4,8 @@ import com.ed.transaction_processing.common.event.TransactionEvent;
 import com.ed.payment.kafka.TransactionProducer;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Service
 public class PaymentService {
     private final TransactionProducer producer;
@@ -13,6 +15,8 @@ public class PaymentService {
     }
 
     public void processPayment(TransactionEvent event) {
+        event.setTimestamp(Instant.now());
+            // timestamp should be set in producer (not controller, consumer...)
         producer.sendTransaction(event);
     }
 
