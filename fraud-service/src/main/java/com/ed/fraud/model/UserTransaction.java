@@ -16,11 +16,11 @@ public class UserTransaction {
 
     public UserTransaction() {}
 
-    public UserTransaction(String userId, double qty, String location) {
+    public UserTransaction(String userId, double qty, String location, Instant timestamp) {
         this.userId = userId;
         this.qty = qty;
         this.location = location;
-        this.timestamp = Instant.now();
+        this.timestamp = timestamp;
     }
 
     // needs getters/setters
