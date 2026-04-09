@@ -31,11 +31,18 @@ public class FraudDetectionService {
             System.out.println("Fraud: new location for user " + event.getUserId());
         }
 
+
+        boolean highVelocity = recent.stream().anyMatch(ut -> ut.getTimestamp().isAfter(event.getTimestamp().minusSeconds(10)));
+        if (highVelocity) {
+            System.out.println("Fraud: high velocity transactions " + event.getUserId());
+        }
+
         // save transaction
         repo.save(new UserTransaction(
-           event.getUserId(),
-           event.getQty(),
-           event.getLocation()
+            event.getUserId(),
+            event.getQty(),
+            event.getLocation(),
+            event.getTimestamp()
         ));
     }
 
