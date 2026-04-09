@@ -1,5 +1,7 @@
 #!/bin/bash
 
+declare -a locations=("London" "Frankfurt" "Paris" "Shanghai" "New York" "Dublin")
+
 for i in {1..10}
 do
   curl -X POST http://localhost:8080/payments \
@@ -8,7 +10,7 @@ do
       \"transactionId\": \"tx-$i\",
       \"userId\": \"user-$i\",
       \"qty\": $((RANDOM % 20000)),
-      \"location\": \"London\"  // randomly generate...?
+      \"location\": ${location[$((RANDOM % 5))]}
     }"
 done
 
