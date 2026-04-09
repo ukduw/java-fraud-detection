@@ -102,10 +102,15 @@ ideas for fraud detection (stateful):
 - unusual merchantId?
 
 TODO:
-- add timestamp to event
-- UserTransaction getters/setters
+- `UserTransaction` getters/setters
   - add as necessary?
   - what scenarios are setters needed in?
 - implement above fraud detection logic
-
+- decision outcomes, not just logging
+- `fraud-service` should emit new `Kafka event`
+  - `transaction.processed`, `transaction.flagged`
+- transaction states
+  - PENDING -> APPROVED / REJECTED / FLAGGED
+  - requires db updates
+- with structured logging, metrics, by transactionId
 
