@@ -12,9 +12,18 @@ services:
       - "9092:9092"
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
     depends_on:
       - zookeeper
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: transactionsdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
 
   payment-service:
     build: ./payment-service
@@ -27,8 +36,18 @@ services:
     build: ./fraud-service
     depends_on:
       - kafka
+      - postgres
+
+  transaction-service:
+    build: ./transaction-service
+    ports:
+      - "8083:8080"
+    depends_on:
+      - kafka
+      - postgres
 
   notification-service:
     build: ./notification-service
     depends_on:
       - kafka
+
