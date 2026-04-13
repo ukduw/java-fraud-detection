@@ -34,3 +34,9 @@ services:
   # sudo -u postgres psql
   # CREATE DATABASE transactiondb;
 
+  # INSERT INTO transactions (transaction_id, user_id, qty, location, timestamp, status, risk_score)
+  # VALUES
+  # ('tx-100', 'user-1', 200, 'London', NOW(), 'APPROVED', 10),
+  # ('tx-101', 'user-1', 15000, 'Tokyo', NOW(), 'FLAGGED', 85),
+  # ('tx-102', 'user-2', 50, 'Paris', NOW(), 'APPROVED', 5);
+
