@@ -3,7 +3,7 @@ server:
 
 spring:
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:9092
     consumer:
       group-id: fraud-group
       auto-offset-reset: earliest
@@ -15,7 +15,7 @@ spring:
         spring.json.value.default.type: com.ed.transaction-processing.common.event.TransactionEvent
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/transactiondb
+    url: jdbc:postgresql://postgres:5432/transactiondb
     username: postgres
     password: postgres
 
