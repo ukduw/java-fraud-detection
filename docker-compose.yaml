@@ -51,3 +51,11 @@ services:
     depends_on:
       - kafka
 
+
+# mvn clean package
+# build docker images inside each service:
+  # docker build -t payment-service .
+  # docker build -t fraud-service .
+  # docker build -t transaction-service .
+  # docker build -t notification-service .
+# docker compose up --build
