@@ -106,4 +106,8 @@ TODO:
   - PENDING -> APPROVED / REJECTED / FLAGGED
   - requires db updates
 - with structured logging, metrics, by transactionId
+- psql setup scripts
+- demo scripts, including to fraud demo(s)
+- run with docker, test...
+- write README
 
