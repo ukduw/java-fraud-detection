@@ -65,7 +65,7 @@ public class FraudDetectionService {
             score += 70;
         }
 
-        boolean highVelocity = recent.stream().anyMatch(ut -> ut.getTimestamp().isAfter(event.getTimestamp().minusSeconds(10)));
+        boolean highVelocity = recent.stream().anyMatch(ut -> ut.getTimestamp().isAfter(event.getTimestamp().minusSeconds(5)));
         if (highVelocity) {
             score += 50;
         }
