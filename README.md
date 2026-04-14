@@ -92,14 +92,7 @@ Note:
 
 
 TODO:
-- implement (stateful) fraud detection logic
-  - userId, location, timestamp
-  - query db on transaction
-  - if location changes too fast...
-  - amount anomaly (usually 1-75, suddenly 10k)
-  - risk score rather than binary
-    - e.g. flag on 50-69, flag/noti/block on >= 70
-- psql setup scripts
+- psql setup/query scripts (update seed data to properly test FraudDetectionService logic)
   - users
   - transactions
 - run with docker, test...
