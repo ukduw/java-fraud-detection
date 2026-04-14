@@ -100,6 +100,8 @@ TODO:
   - risk score rather than binary
     - e.g. flag on 50-69, flag/noti/block on >= 70
 - psql setup scripts
+  - users
+  - transactions
 - demo scripts, including to fraud demo(s)
 - run with docker, test...
 - write README
