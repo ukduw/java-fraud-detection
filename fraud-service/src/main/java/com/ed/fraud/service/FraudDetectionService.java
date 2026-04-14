@@ -29,12 +29,17 @@ public class FraudDetectionService {
         int score = calculateRiskScore(event);
 
         TransactionStatus status = TransactionStatus.APPROVED;
-        if (score >= 50 && score <= 69) {
-            status = TransactionStatus.FLAGGED;
-        }
         if (score >= 70) {
             status = TransactionStatus.BLOCKED;
+        } else if (score >= 50) {
+            status = TransactionStatus.FLAGGED;
         }
+
+        if (score == -1) {
+            status = TransactionStatus.BLOCKED;
+            System.out.println("No such user");
+        }
+
 
         // save transaction
         txRepo.save(new UserTransaction(
