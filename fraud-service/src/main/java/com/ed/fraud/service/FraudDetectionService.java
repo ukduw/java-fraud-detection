@@ -55,26 +55,19 @@ public class FraudDetectionService {
     private int calculateRiskScore(TransactionEvent event) {
         int score = 0;
 
-        // refactor to calculate score rather than print:
-        if (event.getQty() > 10000) {
-            System.out.println("Fraud detected: " + event.getTransactionId());
-        } else {
-            System.out.println("Transaction valid: " + event.getTransactionId());
+        if (event.getQty() > 10000) {   // should query db for average qty; if different by order of magnitude, block
+            score += 70;
         }
-
 
         List<UserTransaction> recent = repo.findTop5ByUserIdOrderByTimestampDesc(event.getUserId());
-
         boolean newLocation = recent.stream().noneMatch(ut -> ut.getLocation().equals(event.getLocation()));
-
         if (newLocation && !recent.isEmpty()) {
-            System.out.println("Fraud: new location for user " + event.getUserId());
+            score += 70;
         }
-
 
         boolean highVelocity = recent.stream().anyMatch(ut -> ut.getTimestamp().isAfter(event.getTimestamp().minusSeconds(10)));
         if (highVelocity) {
-            System.out.println("Fraud: high velocity transactions " + event.getUserId());
+            score += 50;
         }
 
 
