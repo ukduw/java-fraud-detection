@@ -33,11 +33,13 @@ public class FraudDetectionService {
     public void checkFraud(TransactionEvent event) {
         int score = calculateRiskScore(event);
 
-        TransactionStatus status = TransactionStatus.APPROVED;
+        TransactionStatus status = TransactionStatus.PENDING; // never saved to db...
         if (score >= 70) {
             status = TransactionStatus.BLOCKED;
         } else if (score >= 50) {
             status = TransactionStatus.FLAGGED;
+        } else {
+            status = TransactionStatus.APPROVED;
         }
 
         if (score == -1) {
