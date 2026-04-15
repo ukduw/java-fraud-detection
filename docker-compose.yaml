@@ -48,11 +48,6 @@ services:
       - kafka
       - postgres
 
-  notification-service:
-    build: ./notification-service
-    depends_on:
-      - kafka
-
 
 # mvn clean package
 # docker compose up --build
