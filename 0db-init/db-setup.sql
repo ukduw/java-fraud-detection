@@ -50,5 +50,5 @@ VALUES
 
       ('tx-16', 'user-6', 200, 'Dublin', NOW() - INTERVAL '1 day', 'APPROVED', 0),
       ('tx-17', 'user-6', 7, 'Dublin', NOW() - INTERVAL '2 hours', 'APPROVED', 0),
-      ('tx-18', 'user-6', 500, 'Dublin', NOW() - INTERVAL '2 hours', 'APPROVED', 0),
+      ('tx-18', 'user-6', 500, 'Dublin', NOW() - INTERVAL '2 hours', 'APPROVED', 0)
 ON CONFLICT (transaction_id) DO NOTHING;
