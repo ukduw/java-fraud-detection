@@ -39,7 +39,7 @@ do
     -d "{
       \"transactionId\": \"tx-$((i+12))\",
       \"userId\": \"user-1\",
-      \"qty\": $((shuf -i 500-10000 -n 1)),
+      \"qty\": $((shuf -i 5-1000 -n 1)),
       \"location\": ${locations[1]}
     }"
 done
