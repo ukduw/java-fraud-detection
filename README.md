@@ -92,9 +92,6 @@ Note:
 
 
 TODO:
-- psql setup/query scripts (update seed data to properly test FraudDetectionService logic)
-  - users
-  - transactions
 - run with docker, test...
 - write README
 
