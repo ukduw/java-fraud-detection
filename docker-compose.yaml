@@ -24,6 +24,8 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+    volumes:
+      - ./0db-init:/docker-entrypoint-initdb.d  # any .sql in /docker-entrypoint-initdb.d/ runs automatically...
 
   payment-service:
     build: ./payment-service
@@ -53,9 +55,10 @@ services:
 
 
 # mvn clean package
-# build docker images inside each service:
-  # docker build -t payment-service .
-  # docker build -t fraud-service .
-  # docker build -t transaction-service .
-  # docker build -t notification-service .
 # docker compose up --build
+
+  # docker compose logs
+  # or, docker compose logs -f fraud-service (send requests then watch logs live...)
+
+# docker compose down -v
+  # (clean reset, no db persistence - db seeded anew next run...)
