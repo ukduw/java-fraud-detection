@@ -10,7 +10,7 @@ do
     -d "{
       \"transactionId\": \"tx-$i\",
       \"userId\": \"user-$i\",
-      \"qty\": $((shuf -i 5-100 -n 1)),
+      \"qty\": $(shuf -i 5-100 -n 1),
       \"location\": ${location[$((i-1))]}
     }"
 done
@@ -25,7 +25,7 @@ do
     -d "{
       \"transactionId\": \"tx-$((i+6))\",
       \"userId\": \"user-$i\",
-      \"qty\": $((shuf -i 500-10000 -n 1)),
+      \"qty\": $(shuf -i 500-10000 -n 1),
       \"location\": ${fraudcations[$((i-1))]}
     }"
 done
@@ -39,7 +39,7 @@ do
     -d "{
       \"transactionId\": \"tx-$((i+12))\",
       \"userId\": \"user-1\",
-      \"qty\": $((shuf -i 5-1000 -n 1)),
+      \"qty\": $(shuf -i 5-1000 -n 1),
       \"location\": ${locations[1]}
     }"
 done
