@@ -54,6 +54,8 @@ TODO:
 - run with docker, test...
 - write README
 
+i removed notification-service module because it was becoming spaghetti...
+- not ideal, but notifications are in fraud-service
 
 
 - mvn clean package
