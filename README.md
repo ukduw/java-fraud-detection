@@ -54,3 +54,25 @@ TODO:
 - run with docker, test...
 - write README
 
+
+
+- mvn clean package
+- docker compose up --build
+
+- run demo script(s)
+    - python3 demo-script.py
+    - python3 demo-query-transactions.py
+    - or,
+    - ./demo-script.sh
+    - ./demo-query-transactions.sh
+
+- docker compose logs
+- or, docker compose logs -f fraud-service (send requests then watch logs live...)
+
+- run sql query script
+    - psql -U postgres -d transactionsd -f ./demo-db-query.sql
+
+- docker compose down -v
+- (clean reset, no db persistence - db seeded anew next run...)
+
+
