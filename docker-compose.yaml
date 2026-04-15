@@ -16,14 +16,16 @@ services:
 
   postgres:
     image: postgres:15
+    container_name: postgres
     environment:
       POSTGRES_DB: transactionsdb
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
     volumes:
       - ./0db-init:/docker-entrypoint-initdb.d  # any .sql in /docker-entrypoint-initdb.d/ runs automatically...
+      - postgres_data:/var/lib/postgresql/data
 
   payment-service:
     build: ./payment-service
