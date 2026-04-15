@@ -49,11 +49,13 @@ public class FraudDetectionService {
 
         // save transaction
         txRepo.save(new UserTransaction(
+            event.getTransactionId(),
             event.getUserId(),
             event.getQty(),
             event.getLocation(),
             event.getTimestamp(),
-            event.getTransactionStatus()
+            status,
+            score
         ));
 
         TransactionResultEvent result = new TransactionResultEvent(
