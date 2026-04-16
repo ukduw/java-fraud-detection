@@ -1,5 +1,6 @@
 import requests
 import random
+import time
 
 locations = ["London", "Frankfurt", "Paris", "Shanghai", "New York", "Dublin"]
 fraudcations = ["Stockholm", "Canberra", "Minsk", "Buenos Aires", "Kabul", "Copenhagen"]
@@ -11,7 +12,7 @@ for i in range(6):
         "qty": random.randint(5, 100),
         "location": locations[i-1]
     })
-sleep(5)
+time.sleep(5)
 
 
 # fraud (qty, location)
@@ -22,7 +23,7 @@ for i in range(6):
         "qty": random.randint(500, 10000),
         "location": fraudcations[i-1]
     })
-sleep(5)
+time.sleep(5)
 
 # high velocity test
 for i in range(5):
