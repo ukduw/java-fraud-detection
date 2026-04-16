@@ -72,7 +72,7 @@ i removed notification-service module because it was becoming spaghetti...
 - or, docker compose logs -f fraud-service (send requests then watch logs live...)
 
 - run sql query script
-    - docker exec -it <postgres-container> psql -U postgres -d transactionsdb -f ./demo-db-query.sql
+    - docker exec -it postgres psql -U postgres -d transactionsdb -f ./demo-db-query.sql
 
 - docker compose down -v
 - (clean reset, no db persistence - db seeded anew next run...)
