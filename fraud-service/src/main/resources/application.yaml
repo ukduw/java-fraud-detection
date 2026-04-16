@@ -12,7 +12,7 @@ spring:
 
       properties:
         spring.json.trusted.packages: "*"
-        spring.json.value.default.type: com.ed.transaction-processing.common.event.TransactionEvent
+        spring.json.value.default.type: com.ed.transaction_processing.common.event.TransactionEvent
 
   datasource:
     url: jdbc:postgresql://postgres:5432/transactionsdb
