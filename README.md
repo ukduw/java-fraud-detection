@@ -51,8 +51,12 @@ Note:
 
 
 TODO:
-- run with docker, test...
-- write README
+- FINALLY WORKS... just have to:
+  - fix demo scripts (bad request; json fields probably don't match expected; not saved to db)
+    - transactions request script working fine (demo-query-transactions)
+    - the sql script is local, so ./script.sql no longer makes sense within a docker exec line...?
+      - may be easier to just have a full copy-paste-able line in the README
+  - write README
 
 i removed notification-service module because it was becoming spaghetti...
 - not ideal, but notifications are in fraud-service
@@ -61,13 +65,13 @@ i removed notification-service module because it was becoming spaghetti...
 - mvn clean package
 - docker compose up --build
 
-- run demo script(s)
+- run demo script(s) in separate terminal window
     - python3 demo-script.py
     - python3 demo-query-transactions.py
     - or,
     - ./demo-script.sh
     - ./demo-query-transactions.sh
-
+- OR:
 - docker compose logs
 - or, docker compose logs -f fraud-service (send requests then watch logs live...)
 
