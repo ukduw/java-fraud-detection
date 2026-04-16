@@ -1,6 +1,6 @@
 package com.ed.fraud.config;
 
-import com.ed.transaction_processing.common.event.TransactionEvent;
+import com.ed.transaction_processing.common.event.TransactionResultEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
     @Bean
-    public ProducerFactory<String, TransactionEvent> producerFactory() {
+    public ProducerFactory<String, TransactionResultEvent> producerFactory() {
         Map<String, Object> config = new HashMap<>();
 
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
@@ -27,8 +27,8 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, TransactionEvent> kafkaTemplate(
-            ProducerFactory<String, TransactionEvent> producerFactory) {
+    public KafkaTemplate<String, TransactionResultEvent> kafkaTemplate(
+            ProducerFactory<String, TransactionResultEvent> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
     }
 }
