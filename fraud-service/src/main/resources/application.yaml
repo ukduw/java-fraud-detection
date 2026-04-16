@@ -15,9 +15,9 @@ spring:
         spring.json.value.default.type: com.ed.transaction-processing.common.event.TransactionEvent
 
   datasource:
-    url: jdbc:postgresql://postgres:5432/transactiondb
+    url: jdbc:postgresql://postgres:5432/transactionsdb
     username: postgres
-    password: postgres
+    password: password
 
   jpa:
     hibernate:
