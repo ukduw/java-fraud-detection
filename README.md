@@ -81,10 +81,3 @@ i removed notification-service module because it was becoming spaghetti...
 - docker compose down -v
 - (clean reset, no db persistence - db seeded anew next run...)
 
-
-race condition: spring services + kafka start at same time
-- kafka not yet ready to accept connections
-- spring boot attempts auto-configuration
-  - fails to build ProducerFactory (no KafkaTemplate bean)
-  - constructor injection fails
-  - service crashes
