@@ -60,6 +60,7 @@ TODO:
 
 i removed notification-service module because it was becoming spaghetti...
 - not ideal, but notifications are in fraud-service
+- still has kafka producer in fraud-service, so notification-service module can be added back in later...
 
 
 - mvn clean package
