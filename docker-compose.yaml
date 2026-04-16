@@ -17,6 +17,11 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT"
       KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
       KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "nc -z localhost 9092"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     depends_on:
       - zookeeper
 
@@ -31,25 +36,35 @@ services:
       - "5432:5432"
     volumes:
       - ./0db-init:/docker-entrypoint-initdb.d  # any .sql in /docker-entrypoint-initdb.d/ runs automatically...
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d transactionsdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   payment-service:
     build: ./payment-service
     ports:
       - "8080:8080"
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
 
   fraud-service:
     build: ./fraud-service
     depends_on:
-      - kafka
-      - postgres
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
 
   transaction-service:
     build: ./transaction-service
     ports:
       - "8083:8080"
     depends_on:
-      - kafka
-      - postgres
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
 
