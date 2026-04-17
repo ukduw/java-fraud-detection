@@ -11,5 +11,5 @@ public interface UserTransactionRepository extends JpaRepository<UserTransaction
     List<UserTransaction> findTop5ByUserIdOrderByTimestampDesc(String userId);
 
     @Query("SELECT COUNT(t), AVG(t.qty) FROM UserTransaction t WHERE t.userId = :userId")
-    Object[] findTransactionStatsByUserId(@Param("userId") String userId);
+    List<Object[]> findTransactionStatsByUserId(@Param("userId") String userId);
 }
