@@ -16,7 +16,7 @@ public class PaymentController {
     @PostMapping
     public String createPayment(@RequestBody TransactionEvent event) {
         paymentService.processPayment(event);
-        return "Payment sent";
+        return "Payment sent" + "\n";
     }
 
 
