@@ -63,9 +63,11 @@ public class FraudDetectionService {
         TransactionResultEvent result = new TransactionResultEvent(
             event.getTransactionId(),
             event.getUserId(),
+            event.getQty(),
+            event.getLocation(),
+            Instant.now(),
             status,
-            score,
-            Instant.now()
+            score
         );
 
         producer.sendResult(result);
@@ -75,19 +77,20 @@ public class FraudDetectionService {
         log.info("Processing transactionId={} userId={} location={} qty={} timestamp={}",
                 event.getTransactionId(), event.getUserId(), event.getLocation(), event.getQty(), event.getTimestamp());
 
-        User user = userRepo.findById(event.getUserId()).orElse(null);
-        if (user == null) {
+        if (event.getUserId() == null) {
             return -1;
         }
+        User user = userRepo.findById(event.getUserId()).orElse(null);
 
 
         int score = 0;
 
         // qty
-        Object[] userTransactionStats = txRepo.findTransactionStatsByUserId(event.getUserId());
-        Long transactionCount = (Long) userTransactionStats[0];
-        Double avgSize = (Double) userTransactionStats[1];
-        if (avgSize != null && avgSize > 0 && transactionCount >= 3) {
+        List<Object[]> userTransactionStats = txRepo.findTransactionStatsByUserId(event.getUserId());
+        Object[] stats = userTransactionStats.getFirst();
+        Long transactionCount = (Long) stats[0];
+        Double avgSize = (Double) stats[1];
+        if (avgSize != null && transactionCount != null && avgSize > 0 && transactionCount >= 3) {
             double ratio = event.getQty() / avgSize;
             if (ratio >= 100) { // should probably use stdev instead...
                 score += 70;
