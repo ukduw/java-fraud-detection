@@ -20,9 +20,11 @@ public class TransactionResultConsumer {
 
         record.setTransactionId(event.getTransactionId());
         record.setUserId(event.getUserId());
+        record.setQty(event.getQty());
+        record.setLocation(event.getLocation());
+        record.setTimestamp(event.getProcessedAt());
         record.setStatus(event.getStatus());
         record.setRiskScore(event.getRiskScore());
-        record.setTimestamp(event.getProcessedAt());
 
         repo.save(record);
     }
