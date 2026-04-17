@@ -19,6 +19,7 @@
     * [Run demo and query script](#run-demo-and-query-script)
     * [View logs per container](#view-logs-per-container)
     * [Clean shutdown](#clean-shutdown)
+  * [Future improvements:](#future-improvements)
 <!-- TOC -->
 
 ---
