@@ -1,5 +1,27 @@
 # Fraud Detection System (Event-Driven Microservices)
 
+---
+<!-- TOC -->
+* [Fraud Detection System (Event-Driven Microservices)](#fraud-detection-system-event-driven-microservices)
+  * [Overview](#overview)
+  * [Prerequisites](#prerequisites)
+  * [Tech Stack](#tech-stack)
+    * [Backend Services](#backend-services)
+    * [Messaging / Streaming](#messaging--streaming)
+    * [Databases](#databases)
+    * [Demo Scripting / Simulation](#demo-scripting--simulation)
+    * [Build Tools](#build-tools)
+    * [Infrastructure](#infrastructure)
+  * [Architecture / Data Flow](#architecture--data-flow)
+  * [Use](#use)
+    * [Build services:](#build-services)
+    * [Start infrastructure:](#start-infrastructure)
+    * [Run demo and query script](#run-demo-and-query-script)
+    * [View logs per container](#view-logs-per-container)
+    * [Clean shutdown](#clean-shutdown)
+<!-- TOC -->
+
+---
 ## Overview
 This project is a distributed, event-driven fraud detection system built within a transaction processing pipeline. It simulates payment transactions, evaluates them for fraud risk in real-time, and persists transaction and risk assessment data via PostgreSQL.
 
@@ -42,7 +64,7 @@ Future improvements:
 Docker / Docker Compose
 
 ---
-## Data Flow
+## Architecture / Data Flow
 1. `client` (Python script) generates transaction requests (POST) to `/payments`
     - And another Python script to generate (GET) requests to the `/transactions` endpoint, to return SQL tables
 2. `transaction-service`:
