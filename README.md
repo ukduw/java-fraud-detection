@@ -1,84 +1,88 @@
-placeholder
+# Fraud Detection System (Event-Driven Microservices)
 
-high-level architecture:
-- client
-- payment service (spring boot api)
-- kafka topic (transactions)
-- fraud detection service (consumer)
-- database service + notification service
+## Overview
+This project is a distributed, event-driven fraud detection system built within a transaction processing pipeline. It simulates payment transactions, evaluates them for fraud risk in real-time, and persists transaction and risk assessment data via PostgreSQL.
 
-`client -> PaymentController -> PaymentService -> KafkaProducer -> Kafka Topic -> FraudConsumer -> FraudService -> NotificationConsumer -> NotificationService`
-1. A `POST` request hits `/payments`
-2. Inside `payment-service`:
-   1. `PaymentController` receives HTTP request
-      - Spring automatically:
-        - Parses JSON -> `TransactionEvent`
-        - Injects `PaymentService`
-   2. `PaymentService` calls:
-      - `producer.sendTransaction(event);`
-   3. `TransactionProducer` uses:
-      - `KafkaTemplate.send(...)`
-      - **Spring's job is over, Kafka takes over**
-3. Inside `Kafka`:
-   - Message is written to a `topic`: `"transactions"`
-   - Kafka persists it
-   - Any `consumer` subscribed to that `topic` gets it
-4. Inside `fraud-service`:
-   - Spring Kafka:
-     - `@KafkaListener(...)`
-     - Spring runs a background thread that continuously polls Kafka
-     - When a message arrives, it calls the method (event-driven)
-       - `public void consume(TransactionEvent event)`
-     - Then, `Kafka -> TransactionConsumer -> FraudDetectionService`
-5. `notification-service` does the same
-   - Now there are two independent consumers reading the **same topic**
-   - This is **fan-out architecture** via Kafka - **multiple services reacting to the same event**
+The system is run as a set of microservices by Docker, communicating asynchronously via Kafka, with persistence handled via relational databases and service-specific logic in Java (Spring Boot).
 
-3 microservices:
-- payment-service (producer)
-- fraud-service (consumer)
-- notification-service (consumer)
+Fraud detection is based on risk scoring and the `FraudDetectionService` may query the database to use historical data as a means of comparison to the current event.
 
-Docker:
-- `User` -> `localhost:8080` (`payment-service`)
-  - `payment-service` -> `kafka` (`container`)
-    - `kafka` -> `fraud-service` (`container`)
-    - `kafka` -> `notification-service` (`container`)
+Future improvements:
+- Replace rules-based risk scoring with statistical/ML model
+- Add robust error handling and dead-letter queue for Kafka failures
 
-Note:
-- local dev: `localhost:9092`
-- docker: `kafka:9092`
+## Prerequisites
+- Java 17+
+- Maven 3.8+
+- Python 3.10+
+- Docker + Docker Compose
+
+---
+## Tech Stack
+### Backend Services
+- Java 17+
+- Spring Boot
+- Spring Kafka (event streaming)
+- Spring Data JPA (persistence layer)
+- Hibernate ORM
+
+### Messaging / Streaming
+- Apache Kafka 
+
+### Databases
+- PostgreSQL
+
+### Demo Scripting / Simulation
+- Python 3.x (transaction generator / demo load scripts)
+
+### Build Tools
+- Maven
+
+### Infrastructure
+Docker / Docker Compose
+
+---
+## Data Flow
+1. `client` (Python script) generates transaction requests (POST) to `/payments`
+    - And another Python script to generate (GET) requests to the `/transactions` endpoint, to return SQL tables
+2. `transaction-service`:
+   - Receives request
+   - Stores initial record
+   - Emits Kafka event
+3. `fraud-service`:
+   - Consumes event
+   - Computes risk score
+   - Stores enriched transaction result
+   - Publishes decision event
+4. `transaction-service`:
+   - Consumes fraud result event
+   - Updates transaction status (`APPROVED`/ `FLAGGED` / `BLOCKED`)
+
+A `notification-service` module was also planned, but it ended up being removed as the code was becoming spaghetti
+- This is not ideal, but notifications have been moved to the `fraud-service`
+- The `fraud-service` still has a Kafka producer, so the `notification-service` module can still be added back in at a later date
 
 
-TODO:
-- FINALLY WORKS... just have to:
-  - fix demo scripts (bad request; json fields probably don't match expected; not saved to db)
-    - transactions request script working fine (demo-query-transactions)
-    - the sql script is local, so ./script.sql no longer makes sense within a docker exec line...?
-      - may be easier to just have a full copy-paste-able line in the README
-  - write README
 
-i removed notification-service module because it was becoming spaghetti...
-- not ideal, but notifications are in fraud-service
-- still has kafka producer in fraud-service, so notification-service module can be added back in later...
+---
+## Use
+### Build services:
+`mvn clean package`
 
+### Start infrastructure:
+`docker compose up --build`
+- Expect this step to take several minutes...
 
-- mvn clean package
-- docker compose up --build
+### Run demo and query script
+In a separate terminal window:   
+`python3 demo-script.py`   
+`python3 demo-query-transactions.py`
 
-- run demo script(s) in separate terminal window
-    - python3 demo-script.py
-    - python3 demo-query-transactions.py
-    - or,
-    - ./demo-script.sh
-    - ./demo-query-transactions.sh
-- OR:
-- docker compose logs
-- or, docker compose logs -f fraud-service (send requests then watch logs live...)
+### View logs per container
+In the original terminal window:   
+`docker compose logs -f fraud-service`
 
-- run sql query script
-    - docker exec -it postgres psql -U postgres -d transactionsdb -f ./demo-db-query.sql
-
-- docker compose down -v
-- (clean reset, no db persistence - db seeded anew next run...)
+### Clean shutdown
+`docker compose down -v`
+- Clean reset, no database persistence, seeded anew next run
 
