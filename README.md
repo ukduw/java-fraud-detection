@@ -29,9 +29,6 @@ The system is run as a set of microservices by Docker, communicating asynchronou
 
 Fraud detection is based on risk scoring and the `FraudDetectionService` may query the database to use historical data as a means of comparison to the current event.
 
-Future improvements:
-- Replace rules-based risk scoring with statistical/ML model
-- Add robust error handling and dead-letter queue for Kafka failures
 
 ## Prerequisites
 - Java 17+
@@ -107,4 +104,11 @@ In the original terminal window:
 ### Clean shutdown
 `docker compose down -v`
 - Clean reset, no database persistence, seeded anew next run
+
+
+---
+## Future improvements:
+- Replace rules-based risk scoring with statistical/ML model
+- Add robust error handling and dead-letter queue for Kafka failures
+- Add modularised `notification-service` back in
 
